@@ -56,8 +56,8 @@ async function handleEvent(event) {
     });
   
     // Extract the assistant's reply from the API response
-    console.log(openaiResponse);
-    const assistantReply = openaiResponse.choices[0].message.content;
+    // console.log(openaiResponse);
+    const assistantReply = openaiResponse.data.choices[0].message.content;
   
     // Create a text message with the assistant's reply
     const reply = { type: 'text', text: assistantReply };

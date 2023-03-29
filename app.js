@@ -45,7 +45,7 @@ async function handleEvent(event) {
     // Get a response from OpenAI Chat API  
     const configuration = new Configuration({apiKey:apiKey2})
     const openai = new OpenAIApi(configuration);
-    
+
     const openaiResponse = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
@@ -56,6 +56,7 @@ async function handleEvent(event) {
     });
   
     // Extract the assistant's reply from the API response
+    console.log(openaiResponse);
     const assistantReply = openaiResponse.choices[0].message.content;
   
     // Create a text message with the assistant's reply

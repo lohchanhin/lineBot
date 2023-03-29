@@ -52,7 +52,8 @@ async function handleEvent(event) {
         { role: 'system', content: 'You are a helpful assistant.' },
         { role: 'user', content: event.message.text },
       ],
-      max_tokens: 100,
+      max_tokens: 2000,
+      temperature:0.2
     });
   
     // Extract the assistant's reply from the API response

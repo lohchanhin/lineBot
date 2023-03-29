@@ -42,13 +42,13 @@ async function handleEvent(event) {
     }
   
     // Get a response from OpenAI Chat API
-    const openaiResponse = await openai.ChatCompletion.create({
+    const openaiResponse = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
         { role: 'user', content: event.message.text },
       ],
-      max_tokens: 50,
+      max_tokens: 100,
     });
   
     // Extract the assistant's reply from the API response

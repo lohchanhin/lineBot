@@ -2,10 +2,6 @@ require('dotenv').config();
 
 const line = require('@line/bot-sdk');
 const express = require('express');
-const openai = require('openai');
-
-// Configure OpenAI API client
-openai.apiKey = process.env.OPENAI_API_KEY;
 
 // create LINE SDK config from env variables
 const config = {
@@ -17,8 +13,11 @@ const config = {
 const client = new line.Client(config);
 
 // create Express app
+// about Express itself: https://expressjs.com/
 const app = express();
 
+// register a webhook handler with middleware
+// about the middleware, please refer to doc
 app.post('/callback', line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
@@ -29,30 +28,18 @@ app.post('/callback', line.middleware(config), (req, res) => {
     });
 });
 
-async function handleEvent(event) {
+// event handler
+function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
     // ignore non-text-message event
     return Promise.resolve(null);
   }
 
-  // Get a response from OpenAI Chat API
-  const openaiResponse = await openai.ChatCompletion.create({
-    model: 'gpt-3.5-turbo',
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: event.message.text },
-    ],
-    max_tokens: 50,
-  });
+  // create a echoing text message
+  const echo = { type: 'text', text: event.message.text };
 
-  // Extract the assistant's reply from the API response
-  const assistantReply = openaiResponse.choices[0].message.content;
-
-  // Create a text message with the assistant's reply
-  const reply = { type: 'text', text: assistantReply };
-
-  // Use reply API to send the message
-  return client.replyMessage(event.replyToken, reply);
+  // use reply API
+  return client.replyMessage(event.replyToken, echo);
 }
 
 // listen on port

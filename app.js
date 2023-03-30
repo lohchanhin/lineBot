@@ -45,12 +45,12 @@ async function handleEvent(event) {
     const openai = new OpenAIApi(configuration);
     const response = await openai.createImage({
       prompt: event.message.text,
-      n: 2,
+      n: 1,
       size: "1024x1024",
     });
 
     // 获取生成的图片链接
-    const imageUrl = response.data.choices[0].url;
+    const imageUrl = response.data.data[0].url;
 
     // 构造图片消息
     const imageMessage = {

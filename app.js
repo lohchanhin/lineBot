@@ -41,6 +41,7 @@ async function handleEvent(event) {
 
   // 检查前两个字符是否是 "畫圖"
   if (event.message.text.slice(0, 2) === "畫圖") {
+    const configuration = new Configuration({ apiKey: apiKey2 });
     const openai = new OpenAIApi(configuration);
     const response = await openai.createImage({
       prompt: event.message.text,

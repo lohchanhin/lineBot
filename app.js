@@ -39,7 +39,29 @@ async function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  // 获取用户 ID
+  // 检查前两个字符是否是 "畫圖"
+  if (event.message.text.slice(0, 2) === "畫圖") {
+    const openai = new OpenAIApi(configuration);
+    const response = await openai.createImage({
+      prompt: event.message.text,
+      n: 2,
+      size: "1024x1024",
+    });
+
+    // 获取生成的图片链接
+    const imageUrl = response.data.choices[0].url;
+
+    // 构造图片消息
+    const imageMessage = {
+      type: "image",
+      originalContentUrl: imageUrl,
+      previewImageUrl: imageUrl,
+    };
+
+    // 使用 LINE API 发送图片消息
+    return client.replyMessage(event.replyToken, imageMessage);
+  }else{
+    // 获取用户 ID
   const userId = event.source.userId;
   // 如果不存在该用户的对话，为其创建一个
   if (!userConversations[userId]) {
@@ -78,7 +100,10 @@ async function handleEvent(event) {
 
   // 使用 LINE API 回复用户
   return client.replyMessage(event.replyToken, reply);
+  }
 }
+
+  
 
 // 监听端口
 const port = process.env.PORT || 3000;

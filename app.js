@@ -63,12 +63,17 @@ async function handleEvent(event) {
     return client.replyMessage(event.replyToken, imageMessage);
     
   }else{
+
+      // 预设回复
+  const presetReply = { type: 'text', text: '回答正在生成，請耐心等待...' };
+  await client.replyMessage(event.replyToken, presetReply);
+
     // 获取用户 ID
   const userId = event.source.userId;
   // 如果不存在该用户的对话，为其创建一个
   if (!userConversations[userId]) {
     userConversations[userId] = [
-      { role: 'system', content: 'You are a helpful assistant.' }
+      { role: 'system', content: '你是一個社工助手' }
     ];
   }
 
@@ -87,7 +92,7 @@ async function handleEvent(event) {
   // 使用 OpenAI API 获取回复
   const openaiResponse = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
-    messages: userConversations[userId],
+    messages: userConversations[userId] +'回答字數限制在1000內',
     max_tokens: 2000,
     temperature: 0.2
   });

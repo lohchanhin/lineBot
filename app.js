@@ -61,6 +61,7 @@ async function handleEvent(event) {
 
     // 使用 LINE API 发送图片消息
     return client.replyMessage(event.replyToken, imageMessage);
+    
   }else{
     // 获取用户 ID
   const userId = event.source.userId;
@@ -75,7 +76,7 @@ async function handleEvent(event) {
   userConversations[userId].push({ role: 'user', content: event.message.text });
 
   // 如果会话长度超过 6 条消息，则删除最早的一条
-  if (userConversations[userId].length > 6) {
+  if (userConversations[userId].length > 4) {
     userConversations[userId].shift();
   }
 

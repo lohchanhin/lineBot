@@ -65,8 +65,8 @@ async function handleEvent(event) {
   }else{
 
     // 预设回复
-  const presetReply = { type: 'text', text: '回答正在生成，請耐心等待...' };
-  await client.replyMessage(event.replyToken, presetReply);
+  // const presetReply = { type: 'text', text: '回答正在生成，請耐心等待...' };
+  // await client.replyMessage(event.replyToken, presetReply);
 
     // 获取用户 ID
   const userId = event.source.userId;

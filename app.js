@@ -88,7 +88,7 @@ async function handleEvent(event) {
   // 使用 OpenAI API 获取回复
   const openaiResponse = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
-    messages: userConversations[userId] +'回答字數限制在1000內',
+    messages: userConversations[userId],
     max_tokens: 2000,
     temperature: 0.2
   });

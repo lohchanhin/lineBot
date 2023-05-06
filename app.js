@@ -69,7 +69,7 @@ async function handleEvent(event) {
   // 如果不存在该用户的对话，为其创建一个
   if (!userConversations[userId]) {
     userConversations[userId] = [
-      { role: 'system', content: '你是一個社工助手' }
+      { role: 'system', content: '你是人工智能助理' }
     ];
   }
 
@@ -87,7 +87,7 @@ async function handleEvent(event) {
 
   // 使用 OpenAI API 获取回复
   const openaiResponse = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     messages: userConversations[userId],
     max_tokens: 2000,
     temperature: 0.2

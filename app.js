@@ -50,7 +50,7 @@ async function handleEvent(event) {
     });
 
     // 获取生成的图片链接
-    const imageUrl = response.data.data[0].url;
+    const imageUrl = response.data.choices[0].message;
 
     // 构造图片消息
     const imageMessage = {
@@ -76,7 +76,7 @@ async function handleEvent(event) {
   // 将用户消息添加到会话中
   userConversations[userId].push({ role: 'user', content: event.message.text+'回答字數限制在1000以內' });
 
-  // 如果会话长度超过 6 条消息，则删除最早的一条
+  // 如果会话长度超过 4 条消息，则删除最早的一条
   if (userConversations[userId].length > 4) {
     userConversations[userId].shift();
   }

@@ -51,6 +51,10 @@ async function handleEvent(event) {
 
     // 获取生成的图片链接
     const imageUrl = response.data.data[0].url;
+    if(imageUrl == null){
+      const reply = { type: 'text', text: '您的字眼不符合ai規範請修飾' };
+      return client.replyMessage(event.replyToken, reply);
+    }else{
 
     // 构造图片消息
     const imageMessage = {
@@ -61,7 +65,7 @@ async function handleEvent(event) {
 
     // 使用 LINE API 发送图片消息
     return client.replyMessage(event.replyToken, imageMessage);
-    
+  }
   }else{
 
     // 获取用户 ID

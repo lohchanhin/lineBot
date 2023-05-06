@@ -50,7 +50,7 @@ async function handleEvent(event) {
     });
 
     // 获取生成的图片链接
-    const imageUrl = response.data.choices[0].message;
+    const imageUrl = response.data.data[0].url;
 
     // 构造图片消息
     const imageMessage = {
